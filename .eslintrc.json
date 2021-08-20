@@ -18,5 +18,8 @@
     "react",
     "@typescript-eslint"
   ],
-  "rules": {}
+  "rules": {
+    "camelcase": "off",
+    "array-callback-return": "off"
+  }
 }
