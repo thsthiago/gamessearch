@@ -7,6 +7,7 @@ export const GlobalStyles = createGlobalStyle`
     --background: #1D2452;
     --border-color: #979AB0;
     --text: #F2F2F2;
+    --hover-btn: #C20C30;
   }
 
   * {
@@ -23,6 +24,7 @@ export const GlobalStyles = createGlobalStyle`
     font-family: 'Oswald', sans-serif;
     color: var(--text);
     overflow: hidden;
+
   }
 
   #__next  {
@@ -34,7 +36,7 @@ export const GlobalStyles = createGlobalStyle`
     width: 100%;
     height: calc(100% - 75px);
     margin-top: 75px;
-    overflow-y: scroll;
+    overflow-y: auto;
 
     @media(min-width: 768px) {
       width: calc(100% - 80px);
@@ -56,5 +58,15 @@ export const GlobalStyles = createGlobalStyle`
   button {
     outline: none;
     cursor: pointer;
+    border: none;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--secondary);
+    border-radius: 8px;
   }
 `

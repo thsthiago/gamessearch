@@ -45,6 +45,7 @@ export const Container = styled.header`
 
     span {
       font-size: 30px;
+      font-family: 'Teko', sans-serif;
     }
   }
 
@@ -157,28 +158,6 @@ export const NavMobile = styled.div<PropsNav>`
     }
   }
 
-  > span {
-    ${(props) =>
-      props.path !== '/' && props.path !== '/favoritos' && 'display: none;'}
-    position: absolute;
-    transition: left 0.4s;
-    ${(props) => (props.path === '/' ? 'left: 0%; ' : 'left: 50%;')}
-    width: 50%;
-    height: 37px;
-    background: var(--secondary);
-
-    ${(props) =>
-      props.bars
-        ? `
-        bottom: -38px;
-        z-index: 1;
-        `
-        : `
-        bottom: 0px;
-        z-index: -1;
-        `}
-  }
-
   ul {
     width: 100%;
     list-style: none;
@@ -186,6 +165,30 @@ export const NavMobile = styled.div<PropsNav>`
     left: 0;
     background-color: var(--primary);
     display: flex;
+    z-index: 4;
+
+    > span {
+      ${(props) =>
+        props.path !== '/' && props.path !== '/favoritos' && 'display: none;'}
+      position: absolute;
+      top: 0;
+      transition: left 0.4s;
+      ${(props) => (props.path === '/' ? 'left: 0%; ' : 'left: 50%;')}
+      width: 50%;
+      height: 100%;
+      background: var(--secondary);
+
+      ${(props) =>
+        props.bars
+          ? `
+        bottom: -38px;
+        z-index: 0;
+        `
+          : `
+        bottom: 0px;
+        z-index: -1;
+        `}
+    }
 
     ${(props) => (props.bars ? 'top: 100%;' : 'top: 0%; z-index: -1;')}
 
@@ -194,7 +197,7 @@ export const NavMobile = styled.div<PropsNav>`
       display: flex;
       justify-content: center;
       position: relative;
-      z-index: 2;
+      z-index: 1;
 
       a {
         width: 100%;
@@ -283,6 +286,10 @@ export const NavDesktop = styled.div<PropsNav>`
             opacity: 1;
           }
         }
+      }
+
+      &:hover a {
+        color: var(--text);
       }
     }
 

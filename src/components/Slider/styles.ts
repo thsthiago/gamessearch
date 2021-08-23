@@ -10,7 +10,7 @@ export const Container = styled.div<Props>`
   max-height: 170px;
   overflow: hidden;
   position: relative;
-  z-index: -1;
+  z-index: 2;
 
   div {
     width: 100%;
@@ -37,7 +37,7 @@ export const Container = styled.div<Props>`
       rgba(29, 36, 82, 0) 2.08%,
       var(--background) 100%
     );
-    z-index: 2;
+    z-index: 1;
   }
 
   @media (min-width: 768px) {

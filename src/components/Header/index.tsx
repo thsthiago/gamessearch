@@ -29,8 +29,8 @@ export const Header: FC = () => {
             <div></div>
           </div>
 
-          <span></span>
           <ul>
+            <span></span>
             <li>
               <Link href="/">
                 <a>

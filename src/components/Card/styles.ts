@@ -7,30 +7,30 @@ interface Props {
 export const Container = styled.li<Props>`
   width: 46%;
   background: var(--primary);
-  height: auto;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
   cursor: pointer;
-
-  & + & {
-    margin-top: 30px;
-  }
+  margin-bottom: 35px;
 
   a {
     width: 100%;
     color: var(--text);
 
     > div:first-of-type {
-      width: 100%;
+      padding-top: 60%;
+      position: relative;
 
       img {
         width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
       }
     }
   }
 
   @media (min-width: 768px) {
     width: 100%;
-    max-width: 300px;
+    max-width: 250px;
   }
 `
 
@@ -43,9 +43,13 @@ export const Descricao = styled.div`
   }
 
   > strong {
+    display: block;
     font-size: clamp(0.8rem, 2vw, 1rem);
     color: var(--border-color);
     font-weight: 400;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   > div {

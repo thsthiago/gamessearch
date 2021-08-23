@@ -4,30 +4,24 @@ import { Container, Descricao } from './styles'
 import { GrWindows } from 'react-icons/gr'
 import { AiFillChrome, AiFillStar } from 'react-icons/ai'
 import { RiBookmark3Fill } from 'react-icons/ri'
+import { CardProps } from '../../hooks'
 
-interface Props {
-  id: number
-  title: string
-  thumbnail: string
-  short_description: string
-  genre: string
-  platform: string
-}
-
-export const Card: FC<Props> = ({
+export const Card: FC<CardProps> = ({
   id,
   title,
   short_description,
   genre,
   platform,
-  thumbnail
+  thumbnail,
+  estrelas,
+  favorito
 }) => {
   const plataforma = platform.split(',')
-  const star: number = 4
+  const routeGame = title.split(' ').join('-')
 
   return (
     <Container thumbnail={thumbnail}>
-      <Link href="/">
+      <Link href={`/jogo/${routeGame}?id=${id}`}>
         <a>
           <div>
             <img src={thumbnail} />
@@ -51,10 +45,10 @@ export const Card: FC<Props> = ({
 
               <div>
                 <div>
-                  <AiFillStar color={star === 0 ? '979AB0' : 'E51C44'} />
-                  <span>{star}</span>
+                  <AiFillStar color={estrelas === 0 ? '979AB0' : 'E51C44'} />
+                  <span>{estrelas}</span>
                 </div>
-                <RiBookmark3Fill />
+                <RiBookmark3Fill color={favorito ? 'E51C44' : '979AB0'} />
               </div>
             </div>
           </Descricao>
