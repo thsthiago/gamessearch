@@ -13,7 +13,7 @@
 </p>
 
 <h4 align="center"> 
-	Veja o projeto online: <a href="https://gamessearch.vercel.app/">Pomodoro.Dev</a>
+	Veja o projeto online: <a href="https://gamessearch.vercel.app/" target="_blank">Games search</a>
 </h4>
 
 <br>
