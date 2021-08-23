@@ -14,7 +14,7 @@
 
 ## 💻 Sobre o projeto
 
-Esse projeto foi desenvolvido para o projeto de seleção da App Masters.
+Projeto de seleção para a App Masters.
 
 ---
 
