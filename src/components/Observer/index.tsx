@@ -1,10 +1,10 @@
-import { FC, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 interface Props {
   callback(): void
 }
 
-export const Observer: FC<Props> = ({ callback }) => {
+export const Observer = ({ callback }: Props) => {
   const observerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

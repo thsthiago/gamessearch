@@ -1,9 +1,8 @@
-import type { AppProps } from 'next/app'
+import { AppProps } from 'next/app'
 import { useRouter } from 'next/dist/client/router'
-import { Header } from '../components/Header'
-import { Slider } from '../components/Slider'
-import { GlobalStyles } from '../styles/global'
-import { GameProvider } from '../hooks'
+import { Slider, Header } from '@/components'
+import { GameProvider } from '@/context'
+import { GlobalStyles } from '@/styles/global'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter()
@@ -13,12 +12,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       <GlobalStyles />
       <Header />
       <main>
-        {pathname === '/' ? (
-          <Slider />
-        ) : (
-          pathname === '/favoritos' && <Slider />
-        )}
-
+        {pathname === '/' && <Slider />}
+        {pathname === '/favoritos' && <Slider />}
         <Component {...pageProps} />
       </main>
     </GameProvider>

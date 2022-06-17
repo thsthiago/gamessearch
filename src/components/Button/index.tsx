@@ -1,20 +1,24 @@
-import { ReactNode, FC } from 'react'
+import { ReactNode } from 'react'
+import { Status } from '@/interfaces/IGameStorage'
 import { Container } from './styles'
 
 interface Props {
-  stateGame: string
-  children: ReactNode
-  handleStateGame(): void
+  statusGame: Status | undefined
+  status: Status
+  children: string
+  handleStatusGame: (x: Status) => void
 }
 
-export const Button: FC<Props> = ({ children, stateGame, handleStateGame }) => {
-  const stateColor = stateGame === children
+export const Button = (props: Props) => {
+  const { children, statusGame, status, handleStatusGame } = props
+  const stateColor = statusGame === status
 
   return (
     <Container
       stateColor={stateColor}
-      onClick={handleStateGame}
-      value={children as string}>
+      onClick={() => handleStatusGame(status)}
+      value={children}
+    >
       {children}
     </Container>
   )

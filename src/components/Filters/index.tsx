@@ -1,115 +1,126 @@
 import { useRouter } from 'next/dist/client/router'
-import { FC, useCallback, useRef, useState, useEffect } from 'react'
-import { FiSearch } from 'react-icons/fi'
+import { useCallback, useRef, useState } from 'react'
 import { HiFilter } from 'react-icons/hi'
-import { useGames } from '../../hooks'
+import { useDebaunce } from '@/hooks/useDebaunce'
+import { useGames } from '@/hooks/useGames'
+import { Status } from '@/interfaces/IGameStorage'
 import { ContainerFilters } from './styles'
+import { ChangeEvent } from 'react'
 
-export const Filters: FC = () => {
+const allGenres = [
+  {
+    name: 'MMORPG',
+    value: 'mmorpg'
+  },
+  {
+    name: 'MMO',
+    value: 'mmo'
+  },
+  {
+    name: 'Estratégia',
+    value: 'strategy'
+  },
+  {
+    name: 'Fantasia',
+    value: 'fantasy'
+  },
+  {
+    name: 'Atirador',
+    value: 'shooter'
+  },
+  {
+    name: 'Moba',
+    value: 'moba'
+  },
+  {
+    name: 'Corrida',
+    value: 'racing'
+  },
+  {
+    name: 'Card',
+    value: 'card game'
+  },
+  {
+    name: 'Luta',
+    value: 'fighting'
+  },
+  {
+    name: 'Battle Royale',
+    value: 'battle royale'
+  }
+]
+
+export const Filters = () => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const [ordem, setOrdem] = useState('')
-  const [interesses, setInteresses] = useState('')
-  const [generos, setGeneros] = useState([] as Array<string>)
-  const [display, setDIsplay] = useState(false)
+  const [order, setOrder] = useState('')
+  const [status, setStatus] = useState<Status>(undefined)
+  const [genres, setGenres] = useState<string[]>([])
+  const [open, setIsOpen] = useState(false)
   const { newFilters } = useGames()
   const { pathname } = useRouter()
   const [reset, setReset] = useState(false)
+  const searchDebaunce = useDebaunce({ fn: handleSearch, delay: 400 })
 
-  const handleForm = useCallback(
-    (e) => {
-      e.preventDefault()
+  function handleSearch (search: string) {
+    newFilters({ search, status, genres, order })
+  }
 
-      newFilters({
-        search: inputRef.current?.value || '',
-        ordem,
-        interesses,
-        generos
-      })
-    },
-    [ordem, interesses, generos]
-  )
+  const handleOpenFilter = () => setIsOpen((props) => !props)
 
-  const resetFilters = useCallback(() => {
-    setOrdem('')
-    setInteresses('')
-    setGeneros([])
-    setDIsplay(false)
+  const resetFilters = () => {
+    setOrder('')
+    setStatus(undefined)
+    setGenres([])
+    setIsOpen(false)
     setReset(true)
 
     setTimeout(() => setReset(false), 100)
 
     newFilters({
       search: '',
-      ordem: '',
-      interesses: '',
-      generos: []
+      order: undefined,
+      status: undefined,
+      genres: []
     })
-  }, [ordem, interesses, generos])
+  }
 
-  const handleFormFilter = useCallback(
-    (e) => {
-      e.preventDefault()
+  const handleFormFilter = (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    handleOpenFilter()
 
-      newFilters({
-        search: inputRef.current?.value || '',
-        ordem,
-        interesses,
-        generos
-      })
-    },
-    [ordem, interesses, generos]
-  )
+    newFilters({
+      search: inputRef.current?.value || '',
+      order,
+      status,
+      genres
+    })
+  }
 
   const handleGeneros = useCallback(
     (e) => {
       if (e.target.checked) {
-        setGeneros((props: Array<string>) => [...props, e.target.value])
+        setGenres((props: Array<string>) => [...props, e.target.value])
       } else {
-        const newGeneros = generos.filter((genero) => genero !== e.target.value)
-        setGeneros(newGeneros)
+        const newGeneros = genres.filter((genero) => genero !== e.target.value)
+        setGenres(newGeneros)
       }
     },
-    [generos]
+    [genres]
   )
 
   const handleInteresses = useCallback((e) => {
-    setInteresses(e.target.value)
+    setStatus(e.target.value)
   }, [])
 
   const handleOrdem = useCallback((e) => {
-    setOrdem(e.target.value)
-  }, [])
-
-  const handleActiveFilter = useCallback(() => {
-    setDIsplay((props) => !props)
-  }, [])
-
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.value = ''
-    }
-  }, [pathname])
-
-  useEffect(() => {
-    return () => {
-      setInteresses('')
-      setOrdem('')
-      setGeneros([])
-
-      newFilters({
-        search: '',
-        ordem: '',
-        interesses: '',
-        generos: []
-      })
-    }
+    setOrder(e.target.value)
   }, [])
 
   return (
-    <ContainerFilters displayValue={display}>
+    <ContainerFilters displayValue={open}>
       {pathname !== '/favoritos' && (
         <form onSubmit={handleFormFilter}>
-          <button type="button" onClick={handleActiveFilter}>
+          <button type="button" onClick={handleOpenFilter}>
             <HiFilter />
             Filtro
           </button>
@@ -155,7 +166,7 @@ export const Filters: FC = () => {
                     type="radio"
                     onChange={handleInteresses}
                     name="interesse"
-                    value="joguei"
+                    value="played"
                   />
                   <span></span>
                 </label>
@@ -166,7 +177,7 @@ export const Filters: FC = () => {
                     type="radio"
                     onChange={handleInteresses}
                     name="interesse"
-                    value="querendo jogar"
+                    value="wanting to play"
                   />
                   <span></span>
                 </label>
@@ -177,7 +188,7 @@ export const Filters: FC = () => {
                     type="radio"
                     onChange={handleInteresses}
                     name="interesse"
-                    value="jogando"
+                    value="playing"
                   />
                   <span></span>
                 </label>
@@ -185,115 +196,19 @@ export const Filters: FC = () => {
 
               <div>
                 <strong>Genêros:</strong>
-                <label>
-                  MMORPG
-                  <input
-                    type="checkbox"
-                    onChange={handleGeneros}
-                    name="MMORPG"
-                    value="mmorpg"
-                  />
-                  <span></span>
-                </label>
 
-                <label>
-                  MMO
-                  <input
-                    type="checkbox"
-                    onChange={handleGeneros}
-                    name="MMO"
-                    value="mmo"
-                  />
-                  <span></span>
-                </label>
-
-                <label>
-                  Estratégia
-                  <input
-                    type="checkbox"
-                    onChange={handleGeneros}
-                    name="MMO"
-                    value="strategy"
-                  />
-                  <span></span>
-                </label>
-
-                <label>
-                  Fantasia
-                  <input
-                    type="checkbox"
-                    onChange={handleGeneros}
-                    name="MMO"
-                    value="fantasy"
-                  />
-                  <span></span>
-                </label>
-
-                <label>
-                  Atirador
-                  <input
-                    type="checkbox"
-                    onChange={handleGeneros}
-                    name="shooter"
-                    value="shooter"
-                  />
-                  <span></span>
-                </label>
-
-                <label>
-                  Moba
-                  <input
-                    type="checkbox"
-                    onChange={handleGeneros}
-                    name="moba"
-                    value="moba"
-                  />
-                  <span></span>
-                </label>
-
-                <label>
-                  Corrida
-                  <input
-                    type="checkbox"
-                    onChange={handleGeneros}
-                    name="racing"
-                    value="racing"
-                  />
-                  <span></span>
-                </label>
-
-                <label>
-                  Card
-                  <input
-                    type="checkbox"
-                    onChange={handleGeneros}
-                    name="card game"
-                    value="card game"
-                  />
-                  <span></span>
-                </label>
-
-                <label>
-                  Luta
-                  <input
-                    type="checkbox"
-                    onChange={handleGeneros}
-                    name="fighting"
-                    value="fighting"
-                  />
-                  <span></span>
-                </label>
-
-                <label>
-                  Battle Royale
-                  <input
-                    type="checkbox"
-                    name="battle royale"
-                    value="battle royale"
-                    onChange={handleGeneros}
-                  />
-                  <span></span>
-                </label>
+                {allGenres.map(genre => (
+                  <label key={genre.value}>
+                    {genre.name}
+                    <input
+                      type="checkbox"
+                      name={genre.value}
+                      value={genre.value}
+                      onChange={handleGeneros}
+                    />
+                    <span></span>
+                  </label>
+                ))}
               </div>
 
               <button type="submit">Filtrar</button>
@@ -302,14 +217,11 @@ export const Filters: FC = () => {
         </form>
       )}
 
-      <form onSubmit={handleForm}>
+      <form>
         <input
-          ref={inputRef}
-          placeholder="Digite o nome do jogo ou genêro..."
+          onChange={(e) => searchDebaunce(e.target.value)}
+          placeholder="Digite o nome do jogo"
         />
-        <button type="submit">
-          <FiSearch />
-        </button>
       </form>
     </ContainerFilters>
   )

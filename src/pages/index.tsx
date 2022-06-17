@@ -1,8 +1,6 @@
-import type { NextPage } from 'next'
-import { HeadComponent } from '../components/Head'
-import { ListGames } from '../components/ListGames'
+import { HeadComponent, ListGames } from '@/components'
 
-const Home: NextPage = () => {
+const Home = () => {
   return (
     <>
       <HeadComponent title="Home" />

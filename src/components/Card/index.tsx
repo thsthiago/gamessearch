@@ -1,21 +1,21 @@
-import { FC } from 'react'
 import Link from 'next/link'
-import { Container, Descricao } from './styles'
 import { GrWindows } from 'react-icons/gr'
 import { AiFillChrome, AiFillStar } from 'react-icons/ai'
 import { RiBookmark3Fill } from 'react-icons/ri'
-import { CardProps } from '../../hooks'
+import { CardProps } from '@/context'
+import { Container, Descricao } from './styles'
 
-export const Card: FC<CardProps> = ({
-  id,
-  title,
-  short_description,
-  genre,
-  platform,
-  thumbnail,
-  estrelas,
-  favorito
-}) => {
+export const Card = (props: CardProps) => {
+  const {
+    id,
+    title,
+    short_description,
+    genre,
+    platform,
+    thumbnail,
+    stars,
+    favorite
+  } = props
   const plataforma = platform.split(',')
   const routeGame = title.split(' ').join('-')
 
@@ -45,10 +45,10 @@ export const Card: FC<CardProps> = ({
 
               <div>
                 <div>
-                  <AiFillStar color={estrelas === 0 ? '979AB0' : 'E51C44'} />
-                  <span>{estrelas}</span>
+                  <AiFillStar color={stars === 0 ? '979AB0' : 'E51C44'} />
+                  <span>{stars}</span>
                 </div>
-                <RiBookmark3Fill color={favorito ? 'E51C44' : '979AB0'} />
+                <RiBookmark3Fill color={favorite ? 'E51C44' : '979AB0'} />
               </div>
             </div>
           </Descricao>

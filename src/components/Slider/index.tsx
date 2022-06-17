@@ -1,6 +1,6 @@
 import { useEffect, FC, useState } from 'react'
+import { Filters } from '@/components'
 import { Container } from './styles'
-import { Filters } from '../Filters'
 
 export const Slider: FC = () => {
   const [left, setLeft] = useState<number>(0)

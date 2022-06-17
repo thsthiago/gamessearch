@@ -1,18 +1,15 @@
-import { FC, useCallback, useState } from 'react'
+import { FC, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/dist/client/router'
 import { ImBookmarks } from 'react-icons/im'
 import { CgGames } from 'react-icons/cg'
 import { Container, ContainerNav, NavDesktop, NavMobile } from './styles'
-import { useRouter } from 'next/dist/client/router'
 
 export const Header: FC = () => {
   const { pathname } = useRouter()
-
   const [bars, setBars] = useState(false)
 
-  const activebars = useCallback(() => {
-    setBars(!bars)
-  }, [bars])
+  const activebars = () => setBars(state => !state)
 
   return (
     <Container>

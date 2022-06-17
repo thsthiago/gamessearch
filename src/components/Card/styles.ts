@@ -5,11 +5,11 @@ interface Props {
 }
 
 export const Container = styled.li<Props>`
-  width: 46%;
+  width: 100%;
   background: var(--primary);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
   cursor: pointer;
-  margin-bottom: 35px;
+  margin: 35px auto 0;
 
   a {
     width: 100%;
@@ -29,7 +29,6 @@ export const Container = styled.li<Props>`
   }
 
   @media (min-width: 768px) {
-    width: 100%;
     max-width: 250px;
   }
 `
