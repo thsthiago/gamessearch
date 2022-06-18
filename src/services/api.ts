@@ -1,10 +1,9 @@
 import axios from 'axios'
-import config from '@/config'
 
 export const api = axios.create({
-  baseURL: 'https://free-to-play-games-database.p.rapidapi.com/api',
+  baseURL: process.env.NEXT_PUBLIC_URL_SERVICE,
   headers: {
-    'x-rapidapi-host': 'free-to-play-games-database.p.rapidapi.com',
-    'x-rapidapi-key': config.ip_key
+    'x-rapidapi-host': process.env.NEXT_PUBLIC_HOST,
+    'x-rapidapi-key': process.env.NEXT_PUBLIC_IP_KEY
   }
 })
