@@ -8,7 +8,7 @@ import gamesService from '@/services/games.service'
 import { IGameProps } from '@/interfaces/IGames'
 import { IGameStorage, Status } from '@/interfaces/IGameStorage'
 import { Button, HeadComponent } from '@/components'
-import { Container, Descricao, Requisitos, Slide } from './styles'
+import { Container, Descricao, Requisitos, Slide } from '@/styles/pages/jogo'
 
 const initialGameStorage = {
   stars: 0,

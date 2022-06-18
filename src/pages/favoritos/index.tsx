@@ -4,7 +4,7 @@ import { HeadComponent, Card } from '@/components'
 import { CardProps } from '@/context'
 import gamesService from '@/services/games.service'
 import { formatListData } from '@/utils'
-import { Container } from './styles'
+import { Container } from '@/styles/pages/favoritos'
 
 const Favoritos: NextPage = () => {
   const [datas, setDatas] = useState<CardProps[]>([])
