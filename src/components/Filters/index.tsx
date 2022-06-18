@@ -6,6 +6,7 @@ import { useGames } from '@/hooks/useGames'
 import { Status } from '@/interfaces/IGameStorage'
 import { ContainerFilters } from './styles'
 import { ChangeEvent } from 'react'
+import { Ordination } from '@/context'
 
 const allGenres = [
   {
@@ -52,7 +53,7 @@ const allGenres = [
 
 export const Filters = () => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const [order, setOrder] = useState('')
+  const [order, setOrder] = useState<Ordination>(undefined)
   const [status, setStatus] = useState<Status>(undefined)
   const [genres, setGenres] = useState<string[]>([])
   const [open, setIsOpen] = useState(false)
@@ -68,7 +69,7 @@ export const Filters = () => {
   const handleOpenFilter = () => setIsOpen((props) => !props)
 
   const resetFilters = () => {
-    setOrder('')
+    setOrder(undefined)
     setStatus(undefined)
     setGenres([])
     setIsOpen(false)

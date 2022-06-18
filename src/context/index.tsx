@@ -8,9 +8,11 @@ export interface CardProps extends IGames {
   favorite: boolean
 }
 
-interface FilterProps {
+export type Ordination = 'a-z' | 'avaliacao' | undefined 
+
+export interface FilterProps {
   search: string
-  order: string | undefined
+  order: Ordination
   status: Status
   genres: string[]
 }
