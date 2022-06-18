@@ -20,11 +20,11 @@ const handleWithLocalStorage = (data: IGameStorage) => {
   const localStorageData = localStorage.getItem('@GamesSearch')
   if (localStorageData) {
     const dataLocal: IGameStorage[] = JSON.parse(localStorageData)
-    const filterData = dataLocal.filter(item => item.id !== data.id)
+    const filterData = dataLocal.filter((item) => item.id !== data.id)
     localStorage.setItem('@GamesSearch', JSON.stringify([...filterData, data]))
     return
   }
-  
+
   localStorage.setItem('@GamesSearch', JSON.stringify([data]))
 }
 
@@ -44,11 +44,11 @@ const Jogo = ({ ...props }: IGameProps) => {
   const [gameStorage, setGameStorage] = useState<IGameStorage>(() => {
     if (typeof window !== 'undefined') {
       const localStorageData = localStorage.getItem('@GamesSearch')
-      
+
       if (localStorageData) {
-        const gameLocalStorage:IGameStorage[]  = JSON.parse(localStorageData)
-        const game = gameLocalStorage?.find(item => item.id === id)
-        return game ? game : initialGameStorage
+        const gameLocalStorage: IGameStorage[] = JSON.parse(localStorageData)
+        const game = gameLocalStorage?.find((item) => item.id === id)
+        return game || initialGameStorage
       }
     }
 
@@ -60,31 +60,31 @@ const Jogo = ({ ...props }: IGameProps) => {
   const plataforma = platform.split(',')
 
   const handleFavorite = () => {
-    setGameStorage(state => {
+    setGameStorage((state) => {
       const data = {
         ...state,
         favorite: !state.favorite
       }
-      handleWithLocalStorage({...data, id })
+      handleWithLocalStorage({ ...data, id })
       return data
     })
   }
 
   const handleStatusGame = (value: Status) => {
-    setGameStorage(state => {
+    setGameStorage((state) => {
       const data = { ...state, status: value }
-      handleWithLocalStorage({...data, id })
+      handleWithLocalStorage({ ...data, id })
       return data
     })
   }
 
   const handleChangeStars = (stars: number) => {
-    setGameStorage(state => {
-      const data = { 
-        ...state, 
-        stars: state.stars === stars ? state.stars - 1 : stars 
+    setGameStorage((state) => {
+      const data = {
+        ...state,
+        stars: state.stars === stars ? state.stars - 1 : stars
       }
-      handleWithLocalStorage({...data, id })
+      handleWithLocalStorage({ ...data, id })
       return data
     })
   }
@@ -104,10 +104,10 @@ const Jogo = ({ ...props }: IGameProps) => {
   return (
     <>
       <HeadComponent title={props.title} />
-      <Container 
-        background={screenshots.length === 0 ? thumbnail : screenshots[0].image}
-      >
-
+      <Container
+        background={
+          screenshots.length === 0 ? thumbnail : screenshots[0].image
+        }>
         <header>
           <div>
             <div>
@@ -147,7 +147,7 @@ const Jogo = ({ ...props }: IGameProps) => {
                 <div>
                   {Array.from({ length: 5 }).map((_, index) => {
                     const value = index + 1
-                    
+
                     return (
                       <AiFillStar
                         key={value}
@@ -165,25 +165,22 @@ const Jogo = ({ ...props }: IGameProps) => {
 
         <Descricao>
           <div>
-            <Button 
-              statusGame={gameStorage.status} 
-              status="played" 
-              handleStatusGame={handleStatusGame}
-            >
+            <Button
+              statusGame={gameStorage.status}
+              status="played"
+              handleStatusGame={handleStatusGame}>
               Joguei
             </Button>
-            <Button 
-              statusGame={gameStorage.status} 
-              status="wanting to play" 
-              handleStatusGame={handleStatusGame}
-            >
+            <Button
+              statusGame={gameStorage.status}
+              status="wanting to play"
+              handleStatusGame={handleStatusGame}>
               Querendo jogar
             </Button>
-            <Button 
-              statusGame={gameStorage.status} 
-              status="playing" 
-              handleStatusGame={handleStatusGame}
-            >
+            <Button
+              statusGame={gameStorage.status}
+              status="playing"
+              handleStatusGame={handleStatusGame}>
               Jogando
             </Button>
           </div>
@@ -248,11 +245,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     if (!data) {
       return { notFound: true }
     }
-  
+
     return {
       props: { ...data }
     }
-  }catch{
+  } catch {
     return {
       redirect: {
         destination: '/',
@@ -260,7 +257,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       }
     }
   }
-
 }
 
 export default Jogo

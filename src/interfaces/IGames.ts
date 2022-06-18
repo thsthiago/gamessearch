@@ -12,18 +12,6 @@ export interface IGames {
   freetogame_profile_url: string
 }
 
-export interface IGameProps {
-  id: number
-  title: string
-  description: string
-  game_url: string
-  platform: string
-  genre: string
-  minimum_system_requirements: PropsSystem
-  thumbnail: string
-  screenshots: PropsScrenshots[]
-}
-
 interface PropsSystem {
   graphics: string
   memory: string
@@ -35,4 +23,16 @@ interface PropsSystem {
 interface PropsScrenshots {
   id: number
   image: string
+}
+
+export interface IGameProps {
+  id: number
+  title: string
+  description: string
+  game_url: string
+  platform: string
+  genre: string
+  minimum_system_requirements: PropsSystem
+  thumbnail: string
+  screenshots: PropsScrenshots[]
 }

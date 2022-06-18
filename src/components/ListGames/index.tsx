@@ -6,16 +6,22 @@ import { formatListData } from '@/utils'
 import { Card, Observer } from '@/components'
 import { Container } from './styles'
 
-const filterData = (datas: CardProps[], filter: FilterProps, pageSize: number) => {
-  const newData = datas.filter(item => {
+const filterData = (
+  datas: CardProps[],
+  filter: FilterProps,
+  pageSize: number
+) => {
+  const newData = datas.filter((item) => {
     if (
-      (filter.genres.length === 0 || filter.genres.includes(item.genre.toLowerCase())) &&
+      (filter.genres.length === 0 ||
+        filter.genres.includes(item.genre.toLowerCase())) &&
       (filter.status === undefined || filter.status === item.status) &&
-      (filter.search === '' || item.title.toLowerCase().includes(filter.search.toLowerCase()))     
+      (filter.search === '' ||
+        item.title.toLowerCase().includes(filter.search.toLowerCase()))
     ) {
       return true
     }
-      
+
     return false
   })
 
@@ -24,9 +30,11 @@ const filterData = (datas: CardProps[], filter: FilterProps, pageSize: number) =
 
 const sortingDatas = (datas: CardProps[], order: Ordination) => {
   if (order === 'a-z') {
-    return datas.sort((before, after) => before.title.localeCompare(after.title))
+    return datas.sort((before, after) =>
+      before.title.localeCompare(after.title)
+    )
   }
-  
+
   if (order === 'avaliacao') {
     return datas.sort((before, after) => after.stars - before.stars)
   }
@@ -42,25 +50,30 @@ export const ListGames: FC = () => {
   const getGamesData = async () => {
     try {
       const response = await gamesService.getData()
-      const games = formatListData(response) 
+      const games = formatListData(response)
       setDatas(games)
     } catch {}
   }
 
-  const games = useMemo(() => 
-    filterData(sortingDatas(datas, filter.order), filter, pageSize)
-  , [datas, pageSize, filter])
+  const games = useMemo(
+    () => filterData(sortingDatas(datas, filter.order), filter, pageSize),
+    [datas, pageSize, filter]
+  )
 
-  useEffect(() => { getGamesData() }, [])
+  useEffect(() => {
+    getGamesData()
+  }, [])
 
   return (
     <>
       <Container>
-        {games.map((data) => <Card key={data.id} {...data} />)}
+        {games.map((data) => (
+          <Card key={data.id} {...data} />
+        ))}
       </Container>
 
       {games.length !== 0 && (
-        <Observer callback={() => setPageSize(state => state + 1)} />
+        <Observer callback={() => setPageSize((state) => state + 1)} />
       )}
     </>
   )

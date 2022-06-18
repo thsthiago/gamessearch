@@ -8,7 +8,7 @@ export interface CardProps extends IGames {
   favorite: boolean
 }
 
-export type Ordination = 'a-z' | 'avaliacao' | undefined 
+export type Ordination = 'a-z' | 'avaliacao' | undefined
 
 export interface FilterProps {
   search: string

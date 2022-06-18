@@ -9,7 +9,7 @@ export const Header: FC = () => {
   const { pathname } = useRouter()
   const [bars, setBars] = useState(false)
 
-  const activebars = () => setBars(state => !state)
+  const activebars = () => setBars((state) => !state)
 
   return (
     <Container>

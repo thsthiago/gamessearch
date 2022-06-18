@@ -17,8 +17,7 @@ export const Button = (props: Props) => {
     <Container
       stateColor={stateColor}
       onClick={() => handleStatusGame(status)}
-      value={children}
-    >
+      value={children}>
       {children}
     </Container>
   )

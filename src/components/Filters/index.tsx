@@ -1,12 +1,11 @@
 import { useRouter } from 'next/dist/client/router'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef, useState, ChangeEvent } from 'react'
 import { HiFilter } from 'react-icons/hi'
 import { useDebaunce } from '@/hooks/useDebaunce'
 import { useGames } from '@/hooks/useGames'
 import { Status } from '@/interfaces/IGameStorage'
-import { ContainerFilters } from './styles'
-import { ChangeEvent } from 'react'
 import { Ordination } from '@/context'
+import { ContainerFilters } from './styles'
 
 const allGenres = [
   {
@@ -62,7 +61,7 @@ export const Filters = () => {
   const [reset, setReset] = useState(false)
   const searchDebaunce = useDebaunce({ fn: handleSearch, delay: 400 })
 
-  function handleSearch (search: string) {
+  function handleSearch(search: string) {
     newFilters({ search, status, genres, order })
   }
 
@@ -198,7 +197,7 @@ export const Filters = () => {
               <div>
                 <strong>Genêros:</strong>
 
-                {allGenres.map(genre => (
+                {allGenres.map((genre) => (
                   <label key={genre.value}>
                     {genre.name}
                     <input

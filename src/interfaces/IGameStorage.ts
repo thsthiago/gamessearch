@@ -5,4 +5,4 @@ export interface IGameStorage {
   stars: number
   status?: Status
   favorite: boolean
-} 
+}

@@ -1,9 +1,9 @@
-import { AxiosInstance } from "axios";
-import { IGameProps, IGames } from "@/interfaces/IGames";
-import { api } from "./api";
+import { AxiosInstance } from 'axios'
+import { IGameProps, IGames } from '@/interfaces/IGames'
+import { api } from './api'
 
 class GamesService {
-  constructor(private readonly apiService: AxiosInstance){}
+  constructor(private readonly apiService: AxiosInstance) {}
 
   async getData(): Promise<IGames[]> {
     const { data } = await this.apiService.get('/games')

@@ -1,17 +1,19 @@
-import { CardProps } from "../context"
-import { IGames } from "@/interfaces/IGames"
-import { IGameStorage } from "@/interfaces/IGameStorage"
+import { CardProps } from '../context'
+import { IGames } from '@/interfaces/IGames'
+import { IGameStorage } from '@/interfaces/IGameStorage'
 
 export const formatListData = (data: IGames[]): CardProps[] => {
   const storageUserData = localStorage.getItem('@GamesSearch')
   const initialGameStorage = {
-    favorite: false, stars: 0, status: undefined
+    favorite: false,
+    stars: 0,
+    status: undefined
   }
 
-  if(storageUserData) {
+  if (storageUserData) {
     const storage: IGameStorage[] = JSON.parse(storageUserData)
-    return data.map(game => {
-      const gameStorage = storage.find(item => item.id === game.id)
+    return data.map((game) => {
+      const gameStorage = storage.find((item) => item.id === game.id)
       if (gameStorage) {
         return { ...game, ...gameStorage }
       }
@@ -20,5 +22,5 @@ export const formatListData = (data: IGames[]): CardProps[] => {
     })
   }
 
-  return data.map((game) => ({ ...game, ...initialGameStorage })) 
+  return data.map((game) => ({ ...game, ...initialGameStorage }))
 }
